@@ -1,5 +1,6 @@
-from src.Pizza import Pizza, SizeOfPizza, Ingredients
 from helpers import ingredient
+
+from src.Pizza import Ingredients, Pizza, SizeOfPizza
 
 
 def test_create():
