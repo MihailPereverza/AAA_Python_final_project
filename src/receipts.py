@@ -1,14 +1,18 @@
-from Pizza import Pizza, Ingredients, Ingredient
+from typing import Dict, Type
+
+from Pizza import Ingredient, Ingredients, Pizza, SizeOfPizza
 
 
 class Margherita(Pizza):
     def __init__(self, size):
         super().__init__(size)
-        self._ingredients = Ingredients([
-            Ingredient('tomato sauce', 1, 'g', size, (1, 1.2)),
-            Ingredient('mozzarella', 1, 'g', size, (1, 1.2)),
-            Ingredient('tomatoes', 1, 'g', size, (1, 1.2)),
-        ])
+        self._ingredients = Ingredients(
+            [
+                Ingredient('tomato sauce', 1, 'g', size, (1, 1.2)),
+                Ingredient('mozzarella', 1, 'g', size, (1, 1.2)),
+                Ingredient('tomatoes', 1, 'g', size, (1, 1.2)),
+            ]
+        )
 
     @property
     def name(self):
@@ -16,13 +20,15 @@ class Margherita(Pizza):
 
 
 class Pepperoni(Pizza):
-    def __init__(self, size):
+    def __init__(self, size: SizeOfPizza):
         super().__init__(size)
-        self._ingredients = Ingredients([
-            Ingredient('tomato sauce', 1, 'g', size, (1, 1.05)),
-            Ingredient('mozzarella', 1, 'g', size, (1, 1.11)),
-            Ingredient('pepperoni', 1, 'g', size, (1, 1.1)),
-        ])
+        self._ingredients = Ingredients(
+            [
+                Ingredient('tomato sauce', 1, 'g', size, (1, 1.05)),
+                Ingredient('mozzarella', 1, 'g', size, (1, 1.11)),
+                Ingredient('pepperoni', 1, 'g', size, (1, 1.1)),
+            ]
+        )
 
     @property
     def name(self):
@@ -44,7 +50,7 @@ class Hawaiian(Pizza):
         return 'Hawaiian🍍'
 
 
-GLOBAL_MENU = {
+GLOBAL_MENU: Dict[str, Type[Margherita | Pepperoni | Hawaiian]] = {
     'Margherita': Margherita,
     'Pepperoni': Pepperoni,
     'Hawaiian': Hawaiian,

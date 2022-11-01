@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
-from typing import List, Dict, Tuple, Self, ForwardRef
+from typing import Dict, ForwardRef, List, Tuple
 
 
 class SizeOfPizza(Enum):
@@ -9,8 +9,8 @@ class SizeOfPizza(Enum):
     XL = 'XL'
 
     @classmethod
-    def create_coef(cls, coef) -> Dict[Self, float]:
-        return {cls.L: coef[0], cls.XL: coef[1]}
+    def create_coef(cls, coef: Tuple[float, float]) -> Dict[str, float]:
+        return {cls.L.value: coef[0], cls.XL.value: coef[1]}
 
 
 @dataclass
@@ -22,8 +22,7 @@ class Ingredient:
     _coef: Tuple[float, float]
 
     def __post_init__(self):
-        print(SizeOfPizza.create_coef(self._coef))
-        self.amount *= SizeOfPizza.create_coef(self._coef)[self.portion]
+        self.amount *= SizeOfPizza.create_coef(self._coef)[self.portion.value]
 
 
 class Ingredients(list):
@@ -33,7 +32,7 @@ class Ingredients(list):
         self._ingredients = tuple(x.name for x in ingredients)
 
     @property
-    def ingredients(self) -> Tuple[str]:
+    def ingredients(self) -> Tuple[str, ...]:
         return self._ingredients
 
 
@@ -43,7 +42,7 @@ PizzaRef = ForwardRef('Pizza')
 class Pizza(ABC):
     def __init__(self, size: SizeOfPizza):
         self._size = size
-        self._ingredients = None
+        self._ingredients = Ingredients([])
 
     @property
     @abstractmethod
@@ -52,7 +51,7 @@ class Pizza(ABC):
 
     @property
     def size(self):
-        return self._size
+        return self._size.value
 
     def recept(self) -> Ingredients:
         return self._ingredients
@@ -65,8 +64,9 @@ class Pizza(ABC):
     def __iter__(self):
         yield self.name, self.__ingredients_to_dict
 
-    def __eq__(self, other: Self):
+    def __eq__(self, other: object):
+        if not isinstance(other, Pizza):
+            return NotImplemented
         b_name = self.name == other.name
         b_size = self._size == other.size
         return b_name & b_size
-
