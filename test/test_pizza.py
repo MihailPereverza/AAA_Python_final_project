@@ -1,4 +1,4 @@
-from src.Pizza import Pizza, SizeOfPizza, Ingredients, Ingredient
+from src.Pizza import Pizza, SizeOfPizza, Ingredients
 from helpers import ingredient
 
 

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from enum import Enum
-from typing import Dict, ForwardRef, List, Tuple
+from typing import Dict, List, Tuple
 
 
 class SizeOfPizza(Enum):
