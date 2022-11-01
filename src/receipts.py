@@ -38,12 +38,12 @@ class Pepperoni(Pizza):
 class Hawaiian(Pizza):
     def __init__(self, size):
         super().__init__(size)
-        self._ingredients = [
+        self._ingredients = Ingredients([
             Ingredient('tomato sauce', 1, 'g', size, (1, 1.2)),
             Ingredient('mozzarella', 1, 'g', size, (1, 1.3)),
             Ingredient('chicken', 1, 'g', size, (1, 1.25)),
             Ingredient('pineapples', 1, 'g', size, (1, 1.13)),
-        ]
+        ])
 
     @property
     def name(self):

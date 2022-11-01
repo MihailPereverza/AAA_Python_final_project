@@ -36,9 +36,6 @@ class Ingredients(list):
         return self._ingredients
 
 
-PizzaRef = ForwardRef('Pizza')
-
-
 class Pizza(ABC):
     def __init__(self, size: SizeOfPizza):
         self._size = size
@@ -67,6 +64,7 @@ class Pizza(ABC):
     def __eq__(self, other: object):
         if not isinstance(other, Pizza):
             return NotImplemented
+
         b_name = self.name == other.name
-        b_size = self._size == other.size
+        b_size = self.size == other.size
         return b_name & b_size
